@@ -22,7 +22,7 @@ var paths = {
     },
         styles: {
         src: 'src/scss/**/*.scss',
-        dest: './'
+        dest: 'css'
     },
 };
 
