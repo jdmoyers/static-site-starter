@@ -37,8 +37,8 @@ function browser() {
 function cssBuild() {
     return gulp
         .src(paths.styles.src)
-        .pipe(postcss([autoprefixer()]))
         .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+        .pipe(postcss([autoprefixer()]))
         .pipe(gulp.dest(paths.styles.dest))
 }
 
@@ -52,8 +52,8 @@ function cssDev() {
                 console: true
             }]
         }))
-        .pipe(postcss([autoprefixer()]))
         .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
+        .pipe(postcss([autoprefixer()]))
         .pipe(gulp.dest(paths.styles.dest, { sourcemaps: true }))
         .pipe(browsersync.reload({ stream: true }))
 }
