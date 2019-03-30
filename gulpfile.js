@@ -5,6 +5,7 @@ const autoprefixer = require('autoprefixer'),
       eslint = require('gulp-eslint'),
       gulp = require('gulp'),
       imagemin = require('gulp-imagemin'),
+      plumber = require('gulp-plumber'),
       postcss = require('gulp-postcss'),
       sass = require('gulp-sass'),
       stylelint = require('gulp-stylelint'),
@@ -44,6 +45,7 @@ function cssBuild() {
 function cssDev() {
     return gulp
         .src(paths.styles.src, { sourcemaps: true })
+        .pipe(plumber())
         .pipe(stylelint({
                 reporters: [{
                 formatter: 'string',
@@ -72,6 +74,7 @@ function jsBuild() {
 function jsDev() {
     return gulp
         .src(paths.js.src, { sourcemaps: true })
+        .pipe(plumber())
         .pipe(eslint())
         .pipe(eslint.format())
         .pipe(babel({
