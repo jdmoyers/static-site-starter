@@ -20,10 +20,13 @@ var paths = {
         src: 'src/js/**/*.js',
         dest: 'js'
     },
-        styles: {
+    styles: {
         src: 'src/scss/**/*.scss',
         dest: 'css'
     },
+    html: {
+        src: ['**/*.html', '!./node_modules/**']
+    }
 };
 
 function browser() {
@@ -82,7 +85,7 @@ function jsDev() {
         }))
         .pipe(concat('scripts.js'))
         .pipe(gulp.dest(paths.js.dest, { sourcemaps: true }))
-        .pipe(browsersync.reload({stream:true}))
+        .pipe(browsersync.reload({ stream: true }))
 }
 
 function img() {
@@ -106,14 +109,21 @@ function img() {
         .pipe(gulp.dest(paths.img.dir));
 }
 
+function reload() {
+    return gulp
+        .src(paths.html.src)
+        .pipe(browsersync.reload({ stream: true }))
+}
+
 function watch() {
+    gulp.watch(paths.html.src, reload);
     gulp.watch(paths.styles.src, cssDev);
     gulp.watch(paths.js.src, jsDev);
     browser;
 }
 
 const build = gulp.series(jsBuild, cssBuild, img);
-const dev = gulp.parallel(watch, browser);
+const dev = gulp.parallel(cssDev, jsDev, watch, browser);
 
 exports.cssBuild = cssBuild;
 exports.cssDev = cssDev;
